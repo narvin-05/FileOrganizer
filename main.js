@@ -21,7 +21,7 @@ switch(command){
     case "help":
         // call help function
         // console.log("Help function");
-        helperFunction.helper();
+        helperFunction.helper(); 
         break;
     default:
         console.log("Command not recognised:/");
