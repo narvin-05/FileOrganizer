@@ -22,7 +22,7 @@ function organize(srcPath){
     let organize_files = path.join(srcPath,"organized_files");
     // above and below line do the same thing.
     // let organize_files = srcPath + "/" + "organized_files"
-    console.log(organize_files);
+    // console.log(organize_files);
     if(fs.existsSync(organize_files) == false){
         fs.mkdirSync(organize_files);
     }
@@ -34,21 +34,85 @@ function organize(srcPath){
 
     //Reads the contents of the directory.-> basically read the names of files present in directory.
     let allFiles = fs.readdirSync(srcPath);
-    console.log(allFiles);
+    // console.log(allFiles);
 
 
     // S4. Will traverse the array and classify files from it's extension(.pdf , .mp3)
 
     for(let i = 0 ; i < allFiles.length ; i++){
         // let ext = allFiles[i].split(".")[1];
-        let ext = path.extname(allFiles[i]);
-        console.log(ext);
+        
+        //1.   - Check if it is a file or folder
+        
+        let fullPathofFile = path.join(srcPath,allFiles[i]);  
+        // console.log(fullPathofFile);
+        // lstatSync gives the information regarding the link provided.
+        let isFile = fs.lstatSync(fullPathofFile).isFile(); // true or false
+        if(isFile){
+
+            // 1.1 - get extension name
+
+            let ext = path.extname(allFiles[i]).split(".")[1];
+            // console.log(ext);
+
+            // 1.2 - get folder name from extension
+
+            let folderName = getFolderName(ext);
+            console.log(folderName);
+            
+            // 1.3 - copy from source(srcPath)and paste it in destination 
+
+            copyFiletoDestination(srcPath,fullPathofFile,folderName);   
+        }
+    }
+}
+
+
+    function getFolderName(ext){
+
+        for(let key in types){
+            // console.log(key);
+            for(let i = 0 ; i < types[key].length ; i++){
+                if(types[key] [i] == ext){
+                    return key;
+                }
+            }
+        }
+    }
+
+    function copyFiletoDestination(srcPath,fullPathofFile,folderName){
+
+        //1. Folder ka path banana pdega
+        let destFolderPath = path.join(srcPath,"organized_files",folderName);  
+        
+        //2 Check folder if it exists , if not then make a folder
+
+        if(!fs.existsSync(destFolderPath)){
+            fs.mkdirSync(destFolderPath);
+        }
+
+        //3 Copy file from src to dest
+        //Return the last portion of a path
+        let fileName = path.basename(fullPathofFile); // abc.zip
+        let destFileName = path.join(destFolderPath,fileName);
+
+        //                  src         dest
+
+        fs.copyFileSync(fullPathofFile,destFileName);
+         
     }
 
 
-}
+
+
+
+
+
+
     // FileOrganizer\downloads
 let Path ="D:/NodeJS/FileOrganizer/downloads";
 organize(Path);
+
+
 
 
