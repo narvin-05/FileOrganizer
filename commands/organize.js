@@ -47,8 +47,8 @@ function organize(srcPath){
         let fullPathofFile = path.join(srcPath,allFiles[i]);  
         // console.log(fullPathofFile);
         // lstatSync gives the information regarding the link provided.
-        let isFile = fs.lstatSync(fullPathofFile).isFile(); // true or false
-        if(isFile){
+        let isThisFile = fs.lstatSync(fullPathofFile).isFile(); // true or false
+        if(isThisFile){
 
             // 1.1 - get extension name
 
@@ -78,6 +78,7 @@ function organize(srcPath){
                 }
             }
         }
+        // return "miscellaneous"
     }
 
     function copyFiletoDestination(srcPath,fullPathofFile,folderName){
@@ -97,7 +98,7 @@ function organize(srcPath){
         let destFileName = path.join(destFolderPath,fileName);
 
         //                  src         dest
-
+        // copies the content of a file -> file khudse create krega that's why we need to give complete path including file name , then ye copied content ko uss file me paste krega
         fs.copyFileSync(fullPathofFile,destFileName);
          
     }
@@ -109,10 +110,13 @@ function organize(srcPath){
 
 
 
-    // FileOrganizer\downloads
-let Path ="D:/NodeJS/FileOrganizer/downloads";
-organize(Path);
+//     // FileOrganizer\downloads
+// let Path ="D:/NodeJS/FileOrganizer/downloads";
+// organize(Path);
 
 
 
 
+module.exports = {
+    organize : organize
+}

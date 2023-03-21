@@ -4,6 +4,7 @@ let inputArr = process.argv.slice(2);
 let command = inputArr[0];
 let path = inputArr[1];
 let helperFunction = require("./commands/help");
+let organizeFunction = require("./commands/organize");
 
 // helperFunciton is an object here.
 
@@ -16,7 +17,8 @@ switch(command){
         break;
     case "organize":
         // call organize function
-        console.log("Organize function "+path);
+        // console.log("Organize function "+path);
+        organizeFunction.organize(path);
         break;
     case "help":
         // call help function
