@@ -4,6 +4,7 @@ let inputArr = process.argv.slice(2);
 let command = inputArr[0];
 let path = inputArr[1];
 let helperFunction = require("./commands/help");
+let treeFunction = require("./commands/tree");
 let organizeFunction = require("./commands/organize");
 
 // helperFunciton is an object here.
@@ -12,8 +13,8 @@ let organizeFunction = require("./commands/organize");
 
 switch(command){
     case "tree":
-        // call tree function
-        console.log("Tree function "+ path);
+        treeFunction.tree(path);
+        // console.log("Tree function "+ path);
         break;
     case "organize":
         // call organize function
